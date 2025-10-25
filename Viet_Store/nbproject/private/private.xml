@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/dinhl/Downloads/VietStore/Project-Prj301/Viet_Store/web/view/common/admin/breadcumbs.jsp</file>
+            <file>file:/C:/Users/dinhl/Downloads/VietStore/Project-Prj301/Viet_Store/web/view/admin/manageAccounts.jsp</file>
+            <file>file:/C:/Users/dinhl/Downloads/VietStore/Project-Prj301/Viet_Store/src/java/controller/admin/AccountManagerServlet.java</file>
+            <file>file:/C:/Users/dinhl/Downloads/VietStore/Project-Prj301/Viet_Store/web/view/admin/admin-home.jsp</file>
+            <file>file:/C:/Users/dinhl/Downloads/VietStore/Project-Prj301/Viet_Store/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/dinhl/Downloads/VietStore/Project-Prj301/Viet_Store/web/view/common/homepage/footer-top%20ptb-40%20white-bg.jsp</file>
+            <file>file:/C:/Users/dinhl/Downloads/VietStore/Project-Prj301/Viet_Store/src/java/dal/implement/AccountDAO.java</file>
+            <file>file:/C:/Users/dinhl/Downloads/VietStore/Project-Prj301/Viet_Store/web/view/common/admin/sidebar.jsp</file>
+        </group>
     </open-files>
 </project-private>

@@ -2,7 +2,7 @@
 <ol class="breadcrumb">
     <li class="breadcrumb-item">
         <%-- Link về trang chủ admin --%>
-        <a href="${pageContext.request.contextPath}/admin/admin-home">Trang chủ Admin</a>
+        <a href="${pageContext.request.contextPath}/view/homepage/home.jsp">Trang chủ</a>
     </li>
     <%-- Tên trang hiện tại, ví dụ: Tổng quan hoặc Quản lý sản phẩm --%>
     <li class="breadcrumb-item active">Quản lý sản phẩm</li>
