@@ -106,10 +106,7 @@ public class NewFilter implements Filter {
          HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         String url = req.getRequestURI();
-        if (url.contains(".html")) {
-            resp.sendRedirect(req.getContextPath() + "/home");
-            return;
-        }
+        
         
         doBeforeProcessing(request, response);
         
