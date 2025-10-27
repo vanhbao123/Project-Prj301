@@ -100,6 +100,14 @@
         <servlet-name>AccountManagerServlet</servlet-name>
         <url-pattern>/admin/accounts</url-pattern>
     </servlet-mapping>
+     <servlet>
+        <servlet-name>RevenueReportServlet</servlet-name>
+        <servlet-class>controller.admin.RevenueReportServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RevenueReportServlet</servlet-name>
+        <url-pattern>/admin/revenue</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>
             home

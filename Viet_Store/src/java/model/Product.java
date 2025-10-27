@@ -9,6 +9,7 @@ package model;
  * @author DELL
  */
 public class Product {
+
     private int id;
     private String name;
     private String image;
@@ -18,6 +19,15 @@ public class Product {
     private int categoryId;
 
     public Product() {
+    }
+
+    public Product(int id, String name, String image, float price, String description, int categoryId) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.price = price;
+        this.description = description;
+        this.categoryId = categoryId;
     }
 
     public Product(int id, String name, String image, int quantity, float price, String description, int categoryId) {
@@ -85,5 +95,5 @@ public class Product {
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
-    
+
 }

@@ -14,6 +14,59 @@ import model.Account;
  * @author DELL
  */
 public class AccountDAO extends DBContext {
+    // ✅ Lấy Top 3 khách hàng mua nhiều nhất
+
+    public List<Account> getTop3BestCustomers() {
+        List<Account> list = new ArrayList<>();
+        String sql = """
+            SELECT TOP 3 
+                a.id, a.username, a.email, a.address, SUM(o.amount) AS totalSpent
+            FROM Account a
+            JOIN [Order] o ON a.id = o.accountId
+            GROUP BY a.id, a.username, a.email, a.address
+            ORDER BY SUM(o.amount) DESC
+        """;
+
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Account acc = new Account(
+                        resultSet.getInt("id"),
+                        resultSet.getString("username"),
+                        null, // password không cần thiết
+                        resultSet.getString("email"),
+                        resultSet.getString("address"),
+                        0 // roleId không cần ở đây
+                );
+                list.add(acc);
+            }
+
+        } catch (Exception e) {
+            System.err.println(" Lỗi trong getTop3BestCustomers: " + e.getMessage());
+        } finally {
+            closeResources();
+        }
+        return list;
+    }
+
+    private void closeResources() {
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (Exception e) {
+            System.err.println(" Lỗi khi đóng tài nguyên AccountDAO: " + e.getMessage());
+        }
+    }
 
     public Account findUserByNameAndPassword(String username, String password) {
         // Câu lệnh SQL để chọn một tài khoản với điều kiện là username và password

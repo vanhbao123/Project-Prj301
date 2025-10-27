@@ -11,82 +11,45 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Order;
 import java.sql.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  *
  * @author DELL
  */
-public class OrderDAO extends DBContext{
-    public int insertOrder(Order order) {
-    // Câu lệnh SQL (Lưu ý [Order] và [amount] 1 chữ 'm')
-    String sql = "INSERT INTO [dbo].[Order] ([amount], [accountId], [createAt]) VALUES (?, ?, ?)";
+public class OrderDAO extends DBContext {
 
-    try {
-        // Thiết lập kết nối (giống mẫu của bạn)
-        connection = getConnection();
+    public Map<String, Double> getRevenueByMonth() {
+        Map<String, Double> revenueMap = new LinkedHashMap<>();
+        String sql = """
+        SELECT 
+            FORMAT(o.createAt, 'MM-yyyy') AS MonthYear,
+            SUM(o.amount) AS TotalRevenue
+        FROM [Order] o
+        GROUP BY FORMAT(o.createAt, 'MM-yyyy')
+        ORDER BY MIN(o.createAt)
+    """;
 
-        // Chuẩn bị câu lệnh SQL
-        // *** Đây là điểm khác biệt duy nhất so với mẫu của bạn ***
-        // Phải thêm "Statement.RETURN_GENERATED_KEYS" để lấy được ID
-        statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
 
-        // Gán giá trị từ đối tượng Order vào các tham số '?'
-        statement.setInt(1, order.getAmount());
-        statement.setInt(2, order.getAccountId());
-        statement.setTimestamp(3, order.getCreateAt());
-
-        // Thực thi câu lệnh INSERT
-        int affectedRows = statement.executeUpdate();
-
-        // --- Bổ sung logic để lấy ID (vẫn theo sườn của bạn) ---
-        if (affectedRows > 0) {
-            // Lấy ResultSet chứa các ID vừa được sinh ra
-            ResultSet rs = statement.getGeneratedKeys();
-            if (rs.next()) {
-                return rs.getInt(1); // Trả về ID (là cột đầu tiên)
+            while (resultSet.next()) {
+                String month = resultSet.getString("MonthYear");
+                double revenue = resultSet.getDouble("TotalRevenue");
+                revenueMap.put(month, revenue);
             }
+        } catch (Exception e) {
+            System.err.println("Lỗi tại getRevenueByMonth: " + e.getMessage());
+        } finally {
+            closeResources();
         }
-        // -----------------------------------------------------
-
-    } catch (Exception e) {
-        // In ra lỗiもし có ngoại lệ (giống mẫu của bạn)
-        System.out.println("Error at OrderDAO.insertOrder(): " + e.getMessage());
-        e.printStackTrace();
+        return revenueMap;
     }
-    
-    // Trả về -1 nếu có lỗi hoặc không chèn được
-    return -1;
-}
-    public List<Order> getOrdersByAccountId(int accountId) {
-    List<Order> list = new ArrayList<>();
-    String sql = "SELECT * FROM [dbo].[Order] WHERE [accountId] = ? ORDER BY [createAt] DESC";
 
-    try {
-        // 1. Mở kết nối (giống mẫu của bạn)
-        connection = getConnection();
-        
-        // 2. Chuẩn bị statement
-        statement = connection.prepareStatement(sql);
-        statement.setInt(1, accountId); // Gán tham số accountId
-
-        // 3. Thực thi và lấy kết quả
-        resultSet = statement.executeQuery(); // Dùng biến resultSet của DBContext
-
-        // 4. Đọc dữ liệu từ ResultSet
-        while (resultSet.next()) {
-            Order order = new Order();
-            order.setId(resultSet.getInt("id"));
-            order.setAmount(resultSet.getInt("amount"));
-            order.setAccountId(resultSet.getInt("accountId"));
-            order.setCreateAt(resultSet.getTimestamp("createAt"));
-            
-            list.add(order); // Thêm vào danh sách
-        }
-    } catch (Exception e) {
-        System.out.println("Error at OrderDAO.getOrdersByAccountId(): " + e.getMessage());
-        e.printStackTrace();
-    } finally {
-        // 5. (RẤT QUAN TRỌNG) Phải đóng 3 thứ này
+    private void closeResources() {
         try {
             if (resultSet != null) {
                 resultSet.close();
@@ -98,59 +61,149 @@ public class OrderDAO extends DBContext{
                 connection.close();
             }
         } catch (Exception e) {
-            System.out.println("Error closing resources: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println(" Lỗi khi đóng tài nguyên AccountDAO: " + e.getMessage());
         }
     }
-    return list;
-}
-    public void deleteOrderById(int orderId) {
-    String sql = "DELETE FROM [dbo].[Order] WHERE [id] = ?";
-    try {
-        connection = getConnection();
-        statement = connection.prepareStatement(sql);
-        statement.setInt(1, orderId);
-        statement.executeUpdate();
-    } catch (Exception e) {
-        System.out.println("Error at OrderDAO.deleteOrderById(): " + e.getMessage());
-        e.printStackTrace();
+
+    public int insertOrder(Order order) {
+        // Câu lệnh SQL (Lưu ý [Order] và [amount] 1 chữ 'm')
+        String sql = "INSERT INTO [dbo].[Order] ([amount], [accountId], [createAt]) VALUES (?, ?, ?)";
+
+        try {
+            // Thiết lập kết nối (giống mẫu của bạn)
+            connection = getConnection();
+
+            // Chuẩn bị câu lệnh SQL
+            // *** Đây là điểm khác biệt duy nhất so với mẫu của bạn ***
+            // Phải thêm "Statement.RETURN_GENERATED_KEYS" để lấy được ID
+            statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            // Gán giá trị từ đối tượng Order vào các tham số '?'
+            statement.setInt(1, order.getAmount());
+            statement.setInt(2, order.getAccountId());
+            statement.setTimestamp(3, order.getCreateAt());
+
+            // Thực thi câu lệnh INSERT
+            int affectedRows = statement.executeUpdate();
+
+            // --- Bổ sung logic để lấy ID (vẫn theo sườn của bạn) ---
+            if (affectedRows > 0) {
+                // Lấy ResultSet chứa các ID vừa được sinh ra
+                ResultSet rs = statement.getGeneratedKeys();
+                if (rs.next()) {
+                    return rs.getInt(1); // Trả về ID (là cột đầu tiên)
+                }
+            }
+            // -----------------------------------------------------
+
+        } catch (Exception e) {
+            // In ra lỗiもし có ngoại lệ (giống mẫu của bạn)
+            System.out.println("Error at OrderDAO.insertOrder(): " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        // Trả về -1 nếu có lỗi hoặc không chèn được
+        return -1;
     }
-    // CẢNH BÁO: Không đóng kết nối!
-}
+
+    public List<Order> getOrdersByAccountId(int accountId) {
+        List<Order> list = new ArrayList<>();
+        String sql = "SELECT * FROM [dbo].[Order] WHERE [accountId] = ? ORDER BY [createAt] DESC";
+
+        try {
+            // 1. Mở kết nối (giống mẫu của bạn)
+            connection = getConnection();
+
+            // 2. Chuẩn bị statement
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, accountId); // Gán tham số accountId
+
+            // 3. Thực thi và lấy kết quả
+            resultSet = statement.executeQuery(); // Dùng biến resultSet của DBContext
+
+            // 4. Đọc dữ liệu từ ResultSet
+            while (resultSet.next()) {
+                Order order = new Order();
+                order.setId(resultSet.getInt("id"));
+                order.setAmount(resultSet.getInt("amount"));
+                order.setAccountId(resultSet.getInt("accountId"));
+                order.setCreateAt(resultSet.getTimestamp("createAt"));
+
+                list.add(order); // Thêm vào danh sách
+            }
+        } catch (Exception e) {
+            System.out.println("Error at OrderDAO.getOrdersByAccountId(): " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            // 5. (RẤT QUAN TRỌNG) Phải đóng 3 thứ này
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (Exception e) {
+                System.out.println("Error closing resources: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+        return list;
+    }
+
+    public void deleteOrderById(int orderId) {
+        String sql = "DELETE FROM [dbo].[Order] WHERE [id] = ?";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, orderId);
+            statement.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error at OrderDAO.deleteOrderById(): " + e.getMessage());
+            e.printStackTrace();
+        }
+        // CẢNH BÁO: Không đóng kết nối!
+    }
 
 // === HÀM 2: Lấy 1 đơn hàng bằng ID (để kiểm tra bảo mật) ===
 // (Viết theo sườn code của bạn, không đóng kết nối)
-public Order getOrderById(int orderId) {
-    String sql = "SELECT * FROM [dbo].[Order] WHERE [id] = ?";
-    try {
-        connection = getConnection();
-        statement = connection.prepareStatement(sql);
-        statement.setInt(1, orderId);
-        
-        resultSet = statement.executeQuery(); // Dùng biến resultSet của DBContext
-        
-        if (resultSet.next()) {
-            Order order = new Order();
-            order.setId(resultSet.getInt("id"));
-            order.setAmount(resultSet.getInt("amount"));
-            order.setAccountId(resultSet.getInt("accountId"));
-            order.setCreateAt(resultSet.getTimestamp("createAt"));
-            return order;
+    public Order getOrderById(int orderId) {
+        String sql = "SELECT * FROM [dbo].[Order] WHERE [id] = ?";
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, orderId);
+
+            resultSet = statement.executeQuery(); // Dùng biến resultSet của DBContext
+
+            if (resultSet.next()) {
+                Order order = new Order();
+                order.setId(resultSet.getInt("id"));
+                order.setAmount(resultSet.getInt("amount"));
+                order.setAccountId(resultSet.getInt("accountId"));
+                order.setCreateAt(resultSet.getTimestamp("createAt"));
+                return order;
+            }
+        } catch (Exception e) {
+            System.out.println("Error at OrderDAO.getOrderById(): " + e.getMessage());
+            e.printStackTrace();
         }
-    } catch (Exception e) {
-        System.out.println("Error at OrderDAO.getOrderById(): " + e.getMessage());
-        e.printStackTrace();
+        // CẢNH BÁO: Không đóng kết nối!
+        return null;
     }
-    // CẢNH BÁO: Không đóng kết nối!
-    return null;
-}
-public boolean hasUserPurchasedProduct(int accountId, int productId) {
+
+    public boolean hasUserPurchasedProduct(int accountId, int productId) {
         // Sử dụng tên bảng và cột từ schema của bạn
-        String sql = "SELECT 1 " +
-                     "FROM [Order] o " + // Bảng Order của bạn
-                     "JOIN OrderDetails od ON o.id = od.orderId " + // Join với OrderDetails
-                     "WHERE o.accountId = ? AND od.productId = ? "; 
-                     // Chỉ cần kiểm tra accountId và productId
+        String sql = "SELECT 1 "
+                + "FROM [Order] o "
+                + // Bảng Order của bạn
+                "JOIN OrderDetails od ON o.id = od.orderId "
+                + // Join với OrderDetails
+                "WHERE o.accountId = ? AND od.productId = ? ";
+        // Chỉ cần kiểm tra accountId và productId
 
         try {
             connection = getConnection();
@@ -160,7 +213,7 @@ public boolean hasUserPurchasedProduct(int accountId, int productId) {
             resultSet = statement.executeQuery();
 
             // Nếu tìm thấy bất kỳ dòng nào (resultSet.next() == true), nghĩa là đã mua.
-            return resultSet.next(); 
+            return resultSet.next();
 
         } catch (SQLException e) {
             System.err.println("Lỗi khi kiểm tra lịch sử mua hàng: " + e.getMessage());
@@ -168,9 +221,15 @@ public boolean hasUserPurchasedProduct(int accountId, int productId) {
             return false; // Mặc định là false nếu có lỗi
         } finally {
             try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }

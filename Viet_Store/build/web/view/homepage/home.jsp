@@ -24,15 +24,17 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/default.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/responsive.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home-sidebar.css">
+
     </head>
-    
+
     <c:if test="${not empty sessionScope.message}">
         <script type="text/javascript">
             alert('${sessionScope.message}');
         </script>
         <c:remove var="message" scope="session" />
     </c:if>
-    
+
     <body>
         <div class="wrapper">
             <div class="preloader">
@@ -44,33 +46,33 @@
                     </div>
                 </div>
             </div>
-            
+
             <header>
                 <jsp:include page="../common/homepage/header-top white-bg.jsp"></jsp:include>
                 <jsp:include page="../common/homepage/header-middle ptb-20 white-bg.jsp"></jsp:include>
                 <jsp:include page="../common/homepage/header-bottom ptb-10 blue-bg.jsp"></jsp:include>
                 <jsp:include page="../common/homepage/fixed-icon d-none d-md-block.jsp"></jsp:include>
-            </header>
-            
-            <div class="accessories ptb-50">
-                <div class="container">
-                    <div class="section-title mb-50">
-                        <h2>Cửa Hàng</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-9 col-md-8 order-md-2 order-1">
-                            <div class="main-categorie">
-                                <div class="main-breadcrumb mb-30">
-                                    <ul class="ptb-15 breadcrumb-list">
-                                        <li><a href="#">nhà</a></li>
-                                        <li><a class="active" href="#">cửa hàng</a></li>
-                                    </ul>
+                </header>
+
+                <div class="accessories ptb-50">
+                    <div class="container">
+                        <div class="section-title mb-50">
+                            <h2>Cửa Hàng</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-9 col-md-8 order-md-2 order-1">
+                                <div class="main-categorie">
+                                    <div class="main-breadcrumb mb-30">
+                                        <ul class="ptb-15 breadcrumb-list">
+                                            <li><a href="#">nhà</a></li>
+                                            <li><a class="active" href="#">cửa hàng</a></li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="electronics mb-30">
+                                        <img class="full-img" src="${pageContext.request.contextPath}/img/logo/background.jpg" alt="">
                                 </div>
-                                
-                                <div class="electronics mb-30">
-                                    <img class="full-img" src="${pageContext.request.contextPath}/img/logo/background.jpg" alt="">
-                                </div>
-                                
+
                                 <div class="main mb-30">
                                     <div class="row">
                                         <div class="col-12">
@@ -88,7 +90,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="tab-content">
                                     <div id="grid-view" class="tab-pane fade show active">
                                         <div class="row">
@@ -115,18 +117,18 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="toolbar-pagination mb-20 mt-40">
                                 <ul class="text-center toolbar-pagination-list">
                                     <li><a href="#"><i class="zmdi zmdi-chevron-left"></i></a></li>
-                                    <c:forEach begin="1" end="${page.totalPage}" var="pageCurrent">
+                                            <c:forEach begin="1" end="${page.totalPage}" var="pageCurrent">
                                         <li><a href="${page.urlParrtern}page=${pageCurrent}">${pageCurrent}</a></li>
-                                    </c:forEach>
+                                        </c:forEach>
                                     <li><a href="#"><i class="zmdi zmdi-chevron-right"></i></a></li>
                                 </ul>
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-3 col-md-4 order-md-1 order-2">
                             <div class="sidebar white-bg">
                                 <h3 class="sidebar-title">Tính Năng Cửa Hàng</h3>
@@ -145,29 +147,63 @@
                                         <button type="submit" class="styled-button">Tìm Kiếm</button>
                                     </form>
                                 </div>
-                                
+
                                 <div class="manufacturer mb-30">
                                     <h4>Loại Sách</h4>
                                     <ul class="pt-5">
                                         <c:forEach items="${listCategory}" var="c">
                                             <li><a href="home?search=category&categoryId=${c.id}">${c.name} </a></li>
+                                            </c:forEach>
+                                    </ul>
+                                </div>
+
+                                <!-- ======================= TOP 3 SẢN PHẨM BÁN CHẠY ======================= -->
+                                <div class="best-seller mb-30">
+                                    <h4 class="titles">🔥 TOP 3 SẢN PHẨM BÁN CHẠY</h4>
+                                    <ul class="pt-5 top-product-list">
+                                        <c:forEach items="${topProducts}" var="tp" varStatus="status">
+                                            <li class="top-product-item">
+                                                <span class="rank-number">${status.index + 1}</span>
+                                                <a href="product-page?id=${tp.id}" class="top-product-link">
+                                                    <img src="${pageContext.request.contextPath}/img/products/${tp.image}"
+                                                         alt="${tp.name}" class="top-product-img">
+                                                    <span class="top-product-name">${tp.name}</span>
+                                                </a>
+                                            </li>
                                         </c:forEach>
                                     </ul>
                                 </div>
+                                <!-- ======================= TOP 3 KHÁCH HÀNG TIÊU NHIỀU NHẤT ======================= -->
+                                <div class="top-customer mb-30">
+                                    <h4 class="titles">👑 TOP 3 KHÁCH HÀNG TIÊU NHIỀU NHẤT</h4>
+                                    <ul class="pt-5 top-customer-list">
+                                        <c:forEach items="${topCustomers}" var="tc" varStatus="status">
+                                            <li class="top-customer-item">
+                                                <span class="rank-number customer-rank">${status.index + 1}</span>
+                                                <div class="customer-info">
+                                                    <i class="fa fa-user-circle"></i>
+                                                    <span class="customer-name">${tc.name}</span><br>
+                                                    <span class="customer-email">${tc.email}</span>
+                                                </div>
+                                            </li>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <footer>
                 <jsp:include page="../common/homepage/footer-top ptb-40 white-bg.jsp"></jsp:include>
                 <jsp:include page="../common/homepage/footer-middle ptb-30.jsp"></jsp:include>
                 <jsp:include page="../common/homepage/footer-bottom ptb-30 white-bg.jsp"></jsp:include>
-            </footer>
-        </div>
-        
-        <script src="${pageContext.request.contextPath}/js/vendor/modernizr-3.11.2.min.js"></script>
+                </footer>
+            </div>
+
+            <script src="${pageContext.request.contextPath}/js/vendor/modernizr-3.11.2.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/vendor/jquery-3.6.0.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/vendor/jquery-migrate-3.3.2.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/jquery.meanmenu.min.js"></script>
@@ -182,7 +218,7 @@
         <script src="${pageContext.request.contextPath}/js/plugins.js"></script>
         <script src="${pageContext.request.contextPath}/js/main.js"></script>
     </body>
-    
+
     <style>
         /* ---- CSS Cho Nút Đẹp Hơn ---- */
         .styled-button {
@@ -222,6 +258,7 @@
         .styled-button.red:hover {
             background-color: #da190b;
         }
+
     </style>
-    
+
 </html>

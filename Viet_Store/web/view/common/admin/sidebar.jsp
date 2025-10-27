@@ -14,5 +14,13 @@
             <span>Quản lý Tài khoản</span>
         </a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="${pageContext.request.contextPath}/admin/revenue">
+            <i class="fas fa-chart-line"></i>
+            <span>Báo Cáo Doanh Thu</span>
+        </a>
+    </li>
+
     <%-- Các mục quản lý khác đã được xóa --%>
 </ul>

@@ -1,0 +1,186 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Oct 27, 2025, 8:19:44 PM
+    Author     : dinhl
+*/
+/* --- Tiêu đề các phần Top --- */
+.best-seller h4, .top-customer h4 {
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #000;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+/* --- TOP 3 SẢN PHẨM BÁN CHẠY --- */
+.best-seller ul {
+    padding-left: 0;
+}
+
+.top-product-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    list-style: none;
+}
+
+.top-product-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.top-product-link:hover {
+    color: #007bff;
+}
+
+.top-product-img {
+    width: 60px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-right: 10px;
+    transition: transform 0.2s ease;
+}
+
+.top-product-link:hover .top-product-img {
+    transform: scale(1.05);
+}
+
+.top-product-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* --- TOP 3 KHÁCH HÀNG --- */
+.top-customer ul {
+    padding-left: 0;
+}
+
+.top-customer li {
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+.top-customer li i {
+    color: #4CAF50;
+    margin-right: 5px;
+}
+
+.top-customer li span {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.top-customer li:hover {
+    background-color: #f8f8f8;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+/* --- Thứ hạng cho TOP 3 SẢN PHẨM --- */
+.top-product-list {
+    padding-left: 0;
+}
+
+.top-product-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    list-style: none;
+}
+
+.rank-number {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+    color: white;
+    background-color: #ff6b00;
+    border-radius: 50%;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.top-product-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.top-product-link:hover {
+    color: #007bff;
+}
+
+.top-product-img {
+    width: 60px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-right: 10px;
+    transition: transform 0.2s ease;
+}
+
+.top-product-link:hover .top-product-img {
+    transform: scale(1.05);
+}
+
+.top-product-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+/* --- TOP 3 KHÁCH HÀNG TIÊU NHIỀU NHẤT --- */
+.top-customer-list {
+    padding-left: 0;
+}
+
+.top-customer-item {
+    display: flex;
+    align-items: center;   /* canh giữa theo trục dọc */
+    margin-bottom: 12px;
+    list-style: none;
+    gap: 10px;             /* tạo khoảng cách đều giữa số và nội dung */
+}
+.titles{
+    width: 200px;
+    text-align: center;
+}
+.customer-rank {
+    background-color: #ff6b00; /* màu cam giống phần sản phẩm */
+    margin-bottom: 18px;
+}
+
+.customer-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.customer-info i {
+    color: #4CAF50;
+    font-size: 18px;
+    margin-right: 6px;
+}
+
+.customer-name {
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.customer-email {
+    font-size: 12px;
+    color: gray;
+}
+
+

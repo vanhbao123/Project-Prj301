@@ -14,6 +14,61 @@ import model.Product;
  * @author DELL
  */
 public class ProductDAO extends DBContext {
+    // ✅ Lấy Top 3 sản phẩm bán chạy nhất
+
+    public List<Product> getTop3BestSeller() {
+        List<Product> list = new ArrayList<>();
+        String sql = """
+            SELECT TOP 3 
+                p.id, p.name, p.image, p.price, p.description, p.categoryId, 
+                SUM(od.quantity) AS totalSold
+            FROM Product p
+            JOIN OrderDetails od ON p.id = od.productId
+            JOIN [Order] o ON od.orderId = o.id
+            GROUP BY p.id, p.name, p.image, p.price, p.description, p.categoryId
+            ORDER BY SUM(od.quantity) DESC
+        """;
+
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Product p = new Product(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("image"),
+                        resultSet.getFloat("price"),
+                        resultSet.getString("description"),
+                        resultSet.getInt("categoryId")
+                );
+                list.add(p);
+            }
+
+        } catch (Exception e) {
+            System.err.println(" Lỗi trong getTop3BestSeller: " + e.getMessage());
+        } finally {
+            closeResources();
+        }
+        return list;
+    }
+
+    private void closeResources() {
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (Exception e) {
+            System.err.println(" Lỗi khi đóng tài nguyên ProductDAO: " + e.getMessage());
+        }
+    }
 
     public List<Product> findAll(int page) {
         // Khởi tạo một danh sách rỗng để lưu trữ các sản phẩm
@@ -360,6 +415,7 @@ public class ProductDAO extends DBContext {
         }
         return 0; // Trả về 0 nếu có lỗi hoặc không tìm thấy
     }
+
     public List<Product> findAllProduct() {
         // Khởi tạo một danh sách rỗng để lưu trữ các sản phẩm
         List<Product> list = new ArrayList<>();
@@ -380,7 +436,6 @@ public class ProductDAO extends DBContext {
 
             // Chuẩn bị câu lệnh SQL
             statement = connection.prepareStatement(sql);
-            
 
             // Thực thi câu lệnh và nhận kết quả
             resultSet = statement.executeQuery();
@@ -414,14 +469,14 @@ public class ProductDAO extends DBContext {
         // Câu lệnh SQL để chèn dữ liệu vào bảng Product
         // Các cột được liệt kê rõ ràng để đảm bảo đúng thứ tự
         String sql = "INSERT INTO [dbo].[Product] ([name], [image], [quantity], [price], [description], [categoryId]) VALUES (?, ?, ?, ?, ?, ?)";
-        
+
         try {
             // Thiết lập kết nối đến cơ sở dữ liệu
             connection = getConnection();
-            
+
             // Chuẩn bị câu lệnh SQL
             statement = connection.prepareStatement(sql);
-            
+
             // Gán giá trị từ đối tượng Product vào các tham số '?'
             statement.setString(1, pro.getName());
             statement.setString(2, pro.getImage());
@@ -429,10 +484,10 @@ public class ProductDAO extends DBContext {
             statement.setFloat(4, pro.getPrice());
             statement.setString(5, pro.getDescription());
             statement.setInt(6, pro.getCategoryId());
-            
+
             // Thực thi câu lệnh INSERT
             statement.executeUpdate();
-            
+
         } catch (Exception e) {
             // In ra lỗi nếu có ngoại lệ xảy ra để dễ dàng gỡ rối
             System.out.println("Error at ProductDAO.insertProduct(): " + e.getMessage());
@@ -443,20 +498,20 @@ public class ProductDAO extends DBContext {
     public void deleteProductById(int id) {
         // Câu lệnh SQL để xóa một sản phẩm dựa trên ID của nó
         String sql = "DELETE FROM [dbo].[Product] WHERE id = ?";
-        
+
         try {
             // Thiết lập kết nối đến cơ sở dữ liệu
             connection = getConnection();
-            
+
             // Chuẩn bị câu lệnh SQL
             statement = connection.prepareStatement(sql);
-            
+
             // Gán giá trị ID cho tham số '?'
             statement.setInt(1, id);
-            
+
             // Thực thi câu lệnh DELETE
             statement.executeUpdate();
-            
+
         } catch (Exception e) {
             // In ra lỗi nếu có ngoại lệ xảy ra để dễ dàng gỡ rối
             System.out.println("Error at ProductDAO.deleteProductById(): " + e.getMessage());
@@ -466,7 +521,7 @@ public class ProductDAO extends DBContext {
 
     public void editProduct(Product pro) {
         // Câu lệnh SQL để cập nhật thông tin sản phẩm dựa vào ID
-        
+
         String sql = "UPDATE [dbo].[Product] SET "
                 + "[name] = ?, "
                 + "[image] = ?, "
@@ -500,25 +555,30 @@ public class ProductDAO extends DBContext {
             e.printStackTrace();
         }
     }
+
     public void updateProductQuantity(int productId, int newQuantity) {
-    String sql = "UPDATE [dbo].[Product] SET [quantity] = ? WHERE [id] = ?";
-    try {
-        connection = getConnection();
-        statement = connection.prepareStatement(sql);
-        statement.setInt(1, newQuantity);
-        statement.setInt(2, productId);
-        statement.executeUpdate();
-    } catch (Exception e) {
-        e.printStackTrace();
-    } finally {
-        // (BẮT BUỘC PHẢI CÓ)
+        String sql = "UPDATE [dbo].[Product] SET [quantity] = ? WHERE [id] = ?";
         try {
-            if (statement != null) statement.close();
-            if (connection != null) connection.close();
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, newQuantity);
+            statement.setInt(2, productId);
+            statement.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            // (BẮT BUỘC PHẢI CÓ)
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
-}
 
 }
