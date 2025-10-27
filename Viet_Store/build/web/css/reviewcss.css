@@ -1,0 +1,86 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Oct 27, 2025, 5:34:29 PM
+    Author     : DELL
+*/
+/* === CSS CHO HỆ THỐNG ĐÁNH GIÁ === */
+
+/* CSS cho hệ thống sao đánh giá */
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse; /* Đảo ngược để hover hoạt động đúng */
+    justify-content: flex-end; /* Căn sao về bên trái */
+}
+
+.star-rating input[type="radio"] {
+    display: none; /* Ẩn các nút radio */
+}
+
+.star-rating label {
+    font-size: 2rem;
+    color: #ccc;
+    cursor: pointer;
+    padding: 0 3px;
+    transition: color 0.2s;
+}
+
+/* Khi hover vào 1 sao, tất cả sao "trước" nó 
+(thực ra là sau nó vì đã đảo ngược) sẽ sáng lên 
+*/
+.star-rating:not(:hover) input[type="radio"]:checked ~ label,
+.star-rating:hover input[type="radio"]:hover ~ label,
+.star-rating input[type="radio"]:checked ~ label {
+    color: #f39c12;
+}
+
+.star-rating input[type="radio"]:hover ~ label {
+     color: #f5b041;
+}
+
+/* CSS cho danh sách review */
+.reviews-list .review-item {
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+.review-item:last-child {
+    border-bottom: none;
+}
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.reviewer-name {
+    font-weight: bold;
+    color: #333;
+}
+.review-stars {
+    color: #f39c12; /* Màu vàng của sao */
+    font-size: 1.1rem;
+}
+.review-text {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* CSS cho Form Gửi Đánh Giá */
+.review-submission-form {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px solid #f1f1f1;
+}
+.review-submission-form h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+/* Kế thừa class .form-group từ template của bạn */
+.review-submission-form .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+

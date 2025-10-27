@@ -102,7 +102,7 @@
                                                         </div>
                                                         <div class="pro-content">
                                                             <h4><a href="product-page?id=${p.id}">${p.name}</a></h4>
-                                                            <p><span>${p.price} VND</span></p>
+                                                            <p><span>${p.price.longValue()} VND</span></p>
                                                             <div class="pro-actions">
                                                                 <div class="actions-secondary">
                                                                 </div>

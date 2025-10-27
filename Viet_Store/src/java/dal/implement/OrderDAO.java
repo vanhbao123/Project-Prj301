@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import model.Order;
+import java.sql.*;
 
 /**
  *
@@ -143,4 +144,36 @@ public Order getOrderById(int orderId) {
     // CẢNH BÁO: Không đóng kết nối!
     return null;
 }
+public boolean hasUserPurchasedProduct(int accountId, int productId) {
+        // Sử dụng tên bảng và cột từ schema của bạn
+        String sql = "SELECT 1 " +
+                     "FROM [Order] o " + // Bảng Order của bạn
+                     "JOIN OrderDetails od ON o.id = od.orderId " + // Join với OrderDetails
+                     "WHERE o.accountId = ? AND od.productId = ? "; 
+                     // Chỉ cần kiểm tra accountId và productId
+
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, accountId);
+            statement.setInt(2, productId);
+            resultSet = statement.executeQuery();
+
+            // Nếu tìm thấy bất kỳ dòng nào (resultSet.next() == true), nghĩa là đã mua.
+            return resultSet.next(); 
+
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi kiểm tra lịch sử mua hàng: " + e.getMessage());
+            e.printStackTrace();
+            return false; // Mặc định là false nếu có lỗi
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
