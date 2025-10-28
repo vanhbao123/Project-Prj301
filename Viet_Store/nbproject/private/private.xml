@@ -3,7 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ADMIN/Downloads/concec/Project-Prj301/Viet_Store/web/view/homepage/home.jsp</file>
+            <file>file:/C:/Users/dinhl/Desktop/Viet-Store/Project-Prj301/Viet_Store/src/java/dal/implement/ReviewDAO.java</file>
+            <file>file:/C:/Users/dinhl/Desktop/Viet-Store/Project-Prj301/Viet_Store/web/view/common/admin/sidebar.jsp</file>
+            <file>file:/C:/Users/dinhl/Desktop/Viet-Store/Project-Prj301/Viet_Store/src/java/model/Order.java</file>
+            <file>file:/C:/Users/dinhl/Desktop/Viet-Store/Project-Prj301/Viet_Store/src/java/model/Account.java</file>
+            <file>file:/C:/Users/dinhl/Desktop/Viet-Store/Project-Prj301/Viet_Store/src/java/controller/admin/RevenueReportServlet.java</file>
+            <file>file:/C:/Users/dinhl/Desktop/Viet-Store/Project-Prj301/Viet_Store/web/view/homepage/home.jsp</file>
+            <file>file:/C:/Users/dinhl/Desktop/Viet-Store/Project-Prj301/Viet_Store/src/java/dal/implement/OrderDetailsDAO.java</file>
+            <file>file:/C:/Users/dinhl/Desktop/Viet-Store/Project-Prj301/Viet_Store/src/java/dal/implement/AccountDAO.java</file>
+            <file>file:/C:/Users/dinhl/Desktop/Viet-Store/Project-Prj301/Viet_Store/web/view/admin/revenue.jsp</file>
+            <file>file:/C:/Users/dinhl/Desktop/Viet-Store/Project-Prj301/Viet_Store/src/java/dal/implement/ProductDAO.java</file>
+            <file>file:/C:/Users/dinhl/Desktop/Viet-Store/Project-Prj301/Viet_Store/src/java/dal/implement/OrderDAO.java</file>
+            <file>file:/C:/Users/dinhl/Desktop/Viet-Store/Project-Prj301/Viet_Store/src/java/dal/DBContext.java</file>
+            <file>file:/C:/Users/dinhl/Desktop/Viet-Store/Project-Prj301/Viet_Store/src/java/controller/admin/AdminHomeServlet.java</file>
         </group>
     </open-files>
 </project-private>

@@ -26,6 +26,16 @@ public class RevenueReportServlet extends HttpServlet {
 
         Map<String, Double> revenueData = dao.getRevenueByMonth();
         request.setAttribute("revenueData", revenueData);
+        // ====== NEW: Bảng thống kê tổng quan ======
+        int totalOrders = dao.countApprovedOrders();    // tổng đơn đã duyệt
+        int totalCustomers = dao.countTotalCustomers();  // tổng người dùng
+        int totalProducts = dao.countTotalProducts();    // tổng sản phẩm
+        double totalRevenue = dao.getTotalRevenue();     // tổng doanh thu
+
+        request.setAttribute("totalOrders", totalOrders);
+        request.setAttribute("totalCustomers", totalCustomers);
+        request.setAttribute("totalProducts", totalProducts);
+        request.setAttribute("totalRevenue", totalRevenue);
         request.getRequestDispatcher("/view/admin/revenue.jsp").forward(request, response);
     }
 

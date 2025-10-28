@@ -21,6 +21,58 @@ import java.util.Map;
 public class OrderDAO extends DBContext {
     // === 1️⃣ Lấy toàn bộ đơn hàng (Admin) ===
 
+    // Đếm tổng đơn hàng đã duyệt
+    public int countApprovedOrders() {
+        String sql = "SELECT COUNT(*) FROM [Order] WHERE status = N'Đã duyệt'";
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.err.println("❌ Lỗi countApprovedOrders: " + e.getMessage());
+        }
+        return 0;
+    }
+
+// Đếm tổng người dùng
+    public int countTotalCustomers() {
+        String sql = "SELECT COUNT(*) FROM Account WHERE roleId = 2"; // 2: khách hàng
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.err.println("❌ Lỗi countTotalCustomers: " + e.getMessage());
+        }
+        return 0;
+    }
+
+// Đếm tổng sản phẩm
+    public int countTotalProducts() {
+        String sql = "SELECT COUNT(*) FROM Product";
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.err.println("❌ Lỗi countTotalProducts: " + e.getMessage());
+        }
+        return 0;
+    }
+
+// Tổng doanh thu tất cả đơn đã duyệt
+    public double getTotalRevenue() {
+        String sql = "SELECT SUM(amount) FROM [Order] WHERE status = N'Đã duyệt'";
+        try (Connection con = getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (Exception e) {
+            System.err.println("❌ Lỗi getTotalRevenue: " + e.getMessage());
+        }
+        return 0;
+    }
+
     public List<Order> getAllOrders() {
         List<Order> list = new ArrayList<>();
         String sql = """
@@ -78,13 +130,12 @@ public class OrderDAO extends DBContext {
     public Map<String, Double> getRevenueByMonth() {
         Map<String, Double> revenueMap = new LinkedHashMap<>();
         String sql = """
-        SELECT 
-            FORMAT(o.createAt, 'MM-yyyy') AS MonthYear,
-            SUM(o.amount) AS TotalRevenue
-        FROM [Order] o
-        GROUP BY FORMAT(o.createAt, 'MM-yyyy')
-        ORDER BY MIN(o.createAt)
-    """;
+            SELECT FORMAT(o.createAt, 'MM-yyyy') AS Month, SUM(o.amount) AS Total
+            FROM [Order] o
+            WHERE o.status = N'Đã duyệt'
+            GROUP BY FORMAT(o.createAt, 'MM-yyyy')
+            ORDER BY MIN(o.createAt)
+        """;
 
         try {
             connection = getConnection();
@@ -92,12 +143,12 @@ public class OrderDAO extends DBContext {
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                String month = resultSet.getString("MonthYear");
-                double revenue = resultSet.getDouble("TotalRevenue");
+                String month = resultSet.getString("Month");
+                double revenue = resultSet.getDouble("Total");
                 revenueMap.put(month, revenue);
             }
         } catch (Exception e) {
-            System.err.println("Lỗi tại getRevenueByMonth: " + e.getMessage());
+            System.err.println("❌ Lỗi trong getRevenueByMonth: " + e.getMessage());
         } finally {
             closeResources();
         }
