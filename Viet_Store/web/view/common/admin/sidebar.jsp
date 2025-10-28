@@ -21,6 +21,11 @@
             <span>Báo Cáo Doanh Thu</span>
         </a>
     </li>
-
+   <li class="nav-item">
+        <a class="nav-link" href="${pageContext.request.contextPath}/admin/OrderListServlet">
+            <i class="fas fa-chart-line"></i>
+            <span>Orders of customers</span>
+        </a>
+    </li>
     <%-- Các mục quản lý khác đã được xóa --%>
 </ul>

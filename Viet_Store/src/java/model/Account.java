@@ -9,6 +9,7 @@ package model;
  * @author DELL
  */
 public class Account {
+
     private int id;
     private String name;
     private String password;
@@ -75,5 +76,5 @@ public class Account {
     public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
-    
+
 }
