@@ -251,7 +251,7 @@
 
                                 <!-- Top 3 products -->
                                 <div class="best-seller mb-30">
-                                    <h4>🔥 TOP 3 SẢN PHẨM BÁN CHẠY</h4>
+                                    <h4 class="titles">🔥 TOP 3 SẢN PHẨM BÁN CHẠY</h4>
                                     <ul class="pt-5 top-product-list">
                                         <c:forEach items="${topProducts}" var="tp" varStatus="status">
                                             <li class="top-product-item">
@@ -267,7 +267,7 @@
 
                                 <!-- Top 3 customers -->
                                 <div class="top-customer mb-30">
-                                    <h4>👑 TOP 3 KHÁCH HÀNG TIÊU NHIỀU NHẤT</h4>
+                                    <h4 class="titles">👑 TOP 3 KHÁCH HÀNG TIÊU NHIỀU NHẤT</h4>
                                     <ul class="pt-5 top-customer-list">
                                         <c:forEach items="${topCustomers}" var="tc" varStatus="status">
                                             <li class="top-customer-item">
