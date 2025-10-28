@@ -581,4 +581,31 @@ public class ProductDAO extends DBContext {
         }
     }
 
+    public List<Product> findTop10() {
+        List<Product> list = new ArrayList<>();
+        String sql = "SELECT TOP 10 * FROM Product ORDER BY id DESC"; // Hoặc theo bán chạy: ORDER BY SUM(od.quantity) DESC
+        try {
+            connection = getConnection();
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Product p = new Product();
+                p.setId(resultSet.getInt("id"));
+                p.setName(resultSet.getString("name"));
+                p.setImage(resultSet.getString("image"));
+                p.setQuantity(resultSet.getInt("quantity"));
+                p.setPrice(resultSet.getFloat("price"));
+                p.setDescription(resultSet.getString("description"));
+                p.setCategoryId(resultSet.getInt("categoryId"));
+                list.add(p);
+            }
+        } catch (Exception e) {
+            System.out.println("Error at ProductDAO.findTop10(): " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            closeResources();
+        }
+        return list;
+    }
+
 }

@@ -13,7 +13,7 @@
         <meta name="author" content="">
 
         <title>Trang quản lý tài khoản</title> <%-- Đổi tiêu đề trang --%>
-
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
         <link href="${pageContext.request.contextPath}/vendor-admin/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="${pageContext.request.contextPath}/vendor-admin/datatables/dataTables.bootstrap4.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/css/sb-admin.css" rel="stylesheet">
@@ -112,7 +112,7 @@
             </div>
         </div>
         <jsp:include page="../common/user/logOutModal.jsp"/>
-
+        <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
         <script src="${pageContext.request.contextPath}/vendor-admin/jquery/jquery.min.js"></script>
         <script src="${pageContext.request.contextPath}/vendor-admin/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="${pageContext.request.contextPath}/vendor-admin/jquery-easing/jquery.easing.min.js"></script>

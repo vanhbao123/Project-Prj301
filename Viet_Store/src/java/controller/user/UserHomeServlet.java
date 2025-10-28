@@ -28,11 +28,20 @@ public class UserHomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         HttpSession session = request.getSession();
         int accountId = ((Account) session.getAttribute(constant.Constant.SESSION_ACCOUNT)).getId();
+
+        // Lấy danh sách đơn hàng của người dùng
         OrderDAO dao = new OrderDAO();
         List<Order> list = dao.getOrdersByAccountId(accountId);
         request.setAttribute("listOrder", list);
+
+        // Lấy 10 sản phẩm (có thể lấy theo Top bán chạy hoặc mới nhất)
+        ProductDAO productDAO = new ProductDAO();
+        List<Product> products = productDAO.findTop10(); // Tạo hàm findTop10() trong ProductDAO
+        request.setAttribute("products", products);
+
         request.getRequestDispatcher("view/user/user-home.jsp").forward(request, response);
     }
 
