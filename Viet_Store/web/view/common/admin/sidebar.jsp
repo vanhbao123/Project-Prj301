@@ -21,6 +21,15 @@
             <span>Báo Cáo Doanh Thu</span>
         </a>
     </li>
+<<<<<<< HEAD
 
+=======
+   <li class="nav-item">
+        <a class="nav-link" href="${pageContext.request.contextPath}/admin/OrderListServlet">
+            <i class="fas fa-chart-line"></i>
+            <span>Orders of customers</span>
+        </a>
+    </li>
+>>>>>>> parent of 6d7c2c3 (Initial commit)
     <%-- Các mục quản lý khác đã được xóa --%>
 </ul>
