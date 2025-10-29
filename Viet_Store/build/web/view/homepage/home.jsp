@@ -25,19 +25,28 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/responsive.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home-sidebar.css">
+<<<<<<< HEAD
         <!-- Swiper -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
         <style>/* Snow Canvas */
             #snowCanvas {
+=======
+<<<<<<< HEAD
+
+=======
+        <style>
+                #snowCanvas {
+>>>>>>> fabe03815312541bfb63ca7490a6f75a9c51cde2
                 position: fixed;
                 top: 0;
                 left: 0;
                 width: 100%;
                 height: 100%;
-                pointer-events: none;
-                z-index: 9999;
+                pointer-events: none; /* để click vào trang vẫn bình thường */
+                z-index: 9999; /* hiển thị trên tất cả */
             }
 
+<<<<<<< HEAD
             /* Swiper */
             .swiper {
                 width: 100%;
@@ -129,7 +138,11 @@
             .styled-button.red:hover {
                 background-color: #da190b;
             }
+=======
+        
+>>>>>>> fabe03815312541bfb63ca7490a6f75a9c51cde2
         </style>
+>>>>>>> parent of 6d7c2c3 (Initial commit)
     </head>
 
     <c:if test="${not empty sessionScope.message}">
@@ -140,7 +153,14 @@
     </c:if>
 
     <body>
+<<<<<<< HEAD
         <canvas id="snowCanvas"></canvas>
+=======
+<<<<<<< HEAD
+=======
+         <canvas id="snowCanvas"></canvas>
+>>>>>>> parent of 6d7c2c3 (Initial commit)
+>>>>>>> fabe03815312541bfb63ca7490a6f75a9c51cde2
         <div class="wrapper">
             <div class="preloader">
                 <div class="loading-center">
@@ -175,6 +195,7 @@
                                     </div>
 
                                     <div class="electronics mb-30">
+<<<<<<< HEAD
 
                                         <div class="featured-products ptb-50">
                                             <div class="section-title mb-50">
@@ -207,6 +228,11 @@
 
                                 </div>
 
+=======
+                                        <img class="full-img" src="${pageContext.request.contextPath}/img/logo/background.jpg" alt="">
+                                </div>
+
+>>>>>>> fabe03815312541bfb63ca7490a6f75a9c51cde2
                                 <div class="main mb-30">
                                     <div class="row">
                                         <div class="col-12">
@@ -352,7 +378,14 @@
         <script src="${pageContext.request.contextPath}/js/plugins.js"></script>
         <script src="${pageContext.request.contextPath}/js/main.js"></script>
     </body>
+<<<<<<< HEAD
     <script>
+=======
+<<<<<<< HEAD
+
+=======
+       <script>
+>>>>>>> fabe03815312541bfb63ca7490a6f75a9c51cde2
             const canvas = document.getElementById("snowCanvas");
             const ctx = canvas.getContext("2d");
 
@@ -410,6 +443,7 @@
                 w = canvas.width = window.innerWidth;
                 h = canvas.height = window.innerHeight;
             });
+<<<<<<< HEAD
     </script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 
@@ -433,6 +467,10 @@
             swiperEl.addEventListener('mouseleave', () => swiper.autoplay.start());
     </script>
 
+=======
+        </script>
+>>>>>>> parent of 6d7c2c3 (Initial commit)
+>>>>>>> fabe03815312541bfb63ca7490a6f75a9c51cde2
     <style>
         /* ---- CSS Cho Nút Đẹp Hơn ---- */
         .styled-button {

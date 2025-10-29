@@ -23,7 +23,6 @@ public class AccountDAO extends DBContext {
                 a.id, a.username, a.email, a.address, SUM(o.amount) AS totalSpent
             FROM Account a
             JOIN [Order] o ON a.id = o.accountId
-            WHERE o.status = N'Đã duyệt'
             GROUP BY a.id, a.username, a.email, a.address
             ORDER BY SUM(o.amount) DESC
         """;
@@ -37,16 +36,16 @@ public class AccountDAO extends DBContext {
                 Account acc = new Account(
                         resultSet.getInt("id"),
                         resultSet.getString("username"),
-                        null, // password không cần
+                        null, // password không cần thiết
                         resultSet.getString("email"),
                         resultSet.getString("address"),
-                        0 // roleId không cần
+                        0 // roleId không cần ở đây
                 );
                 list.add(acc);
             }
 
         } catch (Exception e) {
-            System.err.println("❌ Lỗi trong getTop3BestCustomers: " + e.getMessage());
+            System.err.println(" Lỗi trong getTop3BestCustomers: " + e.getMessage());
         } finally {
             closeResources();
         }

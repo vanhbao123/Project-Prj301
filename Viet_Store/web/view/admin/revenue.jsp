@@ -1,4 +1,3 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
@@ -41,47 +40,6 @@
                             <canvas id="revenueChart" height="100"></canvas>
                         </div>
                     </div>
-                    <!-- ===== BẢNG THỐNG KÊ TỔNG QUAN ===== -->
-                    <div class="card mt-4">
-                        <div class="card-header">
-                            <i class="fas fa-info-circle"></i> Thống kê tổng quan hệ thống
-                        </div>
-                        <div class="card-body text-center">
-                            <div class="row text-white">
-                                <!-- Ô 1: Tổng đơn hàng -->
-                                <div class="col-md-3 mb-3">
-                                    <div class="bg-primary p-3 rounded shadow-sm">
-                                        <h5>Đơn hàng</h5>
-                                        <h3>${totalOrders}</h3>
-                                    </div>
-                                </div>
-                                <!-- Ô 2: Tổng người dùng -->
-                                <div class="col-md-3 mb-3">
-                                    <div class="bg-success p-3 rounded shadow-sm">
-                                        <h5>Người dùng</h5>
-                                        <h3>${totalCustomers}</h3>
-                                    </div>
-                                </div>
-                                <!-- Ô 3: Tổng sản phẩm -->
-                                <div class="col-md-3 mb-3">
-                                    <div class="bg-warning p-3 rounded shadow-sm text-dark">
-                                        <h5>Sản phẩm</h5>
-                                        <h3>${totalProducts}</h3>
-                                    </div>
-                                </div>
-                                <!-- Ô 4: Tổng doanh thu -->
-                                <div class="col-md-3 mb-3">
-                                    <div class="bg-danger p-3 rounded shadow-sm">
-                                        <h5>Doanh thu</h5>
-                                        <h3>
-                                            <fmt:formatNumber value="${totalRevenue}" type="number"/> VNĐ
-                                        </h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
 
                 </div>
                 <jsp:include page="../common/admin/footer.jsp"/>

@@ -13,7 +13,7 @@
         <meta name="author" content="">
 
         <title>Trang quản lý tài khoản</title> <%-- Đổi tiêu đề trang --%>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
         <link href="${pageContext.request.contextPath}/vendor-admin/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link href="${pageContext.request.contextPath}/vendor-admin/datatables/dataTables.bootstrap4.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/css/sb-admin.css" rel="stylesheet">
@@ -65,7 +65,6 @@
                                             <th>Tổng tiền</th> <%-- Đổi tên cột --%>
                                             <th>Mã TK</th> <%-- Đổi tên cột --%>
                                             <th>Ngày tạo</th> <%-- Đổi tên cột --%>
-                                            <th>Trạng thái</th> <%-- Đổi tên cột --%>
                                             <th style="width: 100px;">Hành động</th> <%-- Đổi tên cột và giới hạn chiều rộng --%>
                                         </tr>
                                     </thead>
@@ -81,10 +80,6 @@
                                                 <td>
                                                     <%-- Định dạng ngày tháng dd/MM/yyyy HH:mm --%>
                                                     <fmt:formatDate value="${list.createAt}" pattern="dd/MM/yyyy HH:mm" />
-                                                </td>
-                                                <td>
-                                                    ${list.getStatus()}
-
                                                 </td>
                                                 <td>
                                                     <%-- Form hủy đơn hàng --%>
@@ -110,9 +105,9 @@
                 <jsp:include page="../common/user/footer.jsp"/>
 
             </div>
-        </div>
+            </div>
         <jsp:include page="../common/user/logOutModal.jsp"/>
-        <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+
         <script src="${pageContext.request.contextPath}/vendor-admin/jquery/jquery.min.js"></script>
         <script src="${pageContext.request.contextPath}/vendor-admin/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="${pageContext.request.contextPath}/vendor-admin/jquery-easing/jquery.easing.min.js"></script>
