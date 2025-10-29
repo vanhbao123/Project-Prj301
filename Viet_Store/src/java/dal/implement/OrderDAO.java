@@ -19,61 +19,6 @@ import java.util.Map;
  * @author DELL
  */
 public class OrderDAO extends DBContext {
-    // === 1️⃣ Lấy toàn bộ đơn hàng (Admin) ===
-
-    public List<Order> getAllOrders() {
-        List<Order> list = new ArrayList<>();
-        String sql = """
-        SELECT o.id, o.amount, o.accountId, o.createAt, o.status,
-               a.username AS accountName, a.email, a.address
-        FROM [Order] o
-        JOIN [Account] a ON o.accountId = a.id
-        ORDER BY o.createAt DESC
-    """;
-
-        try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                Order o = new Order();
-                o.setId(rs.getInt("id"));
-                o.setAmount(rs.getInt("amount"));
-                o.setAccountId(rs.getInt("accountId"));
-                o.setCreateAt(rs.getTimestamp("createAt"));
-                o.setStatus(rs.getString("status"));
-                o.setAccountName(rs.getString("accountName"));
-                o.setEmail(rs.getString("email"));
-                o.setAddress(rs.getString("address"));
-                list.add(o);
-            }
-
-        } catch (SQLException e) {
-            System.err.println("❌ Error at getAllOrders(): " + e.getMessage());
-        }
-
-        return list;
-    }
-
-    public boolean updateOrderStatus(int orderId, String status) {
-        String sql = "UPDATE [Order] SET status = ? WHERE id = ?";
-        boolean updated = false;
-
-        try {
-            connection = getConnection(); // 🔹 Mở kết nối trước khi dùng
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, status);
-            ps.setInt(2, orderId);
-
-            int rows = ps.executeUpdate();
-            updated = rows > 0; // kiểm tra có dòng nào bị ảnh hưởng không
-            System.out.println("✅ Update status orderId=" + orderId + " → " + status + " (" + rows + " row(s))");
-        } catch (Exception e) {
-            System.err.println("❌ Error at updateOrderStatus(): " + e.getMessage());
-        } finally {
-            closeResources();
-        }
-
-        return updated;
-    }
 
     public Map<String, Double> getRevenueByMonth() {
         Map<String, Double> revenueMap = new LinkedHashMap<>();
@@ -183,7 +128,6 @@ public class OrderDAO extends DBContext {
                 order.setAmount(resultSet.getInt("amount"));
                 order.setAccountId(resultSet.getInt("accountId"));
                 order.setCreateAt(resultSet.getTimestamp("createAt"));
-                order.setStatus(resultSet.getString("status"));
 
                 list.add(order); // Thêm vào danh sách
             }

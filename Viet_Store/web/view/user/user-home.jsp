@@ -65,7 +65,6 @@
                                             <th>Tổng tiền</th> <%-- Đổi tên cột --%>
                                             <th>Mã TK</th> <%-- Đổi tên cột --%>
                                             <th>Ngày tạo</th> <%-- Đổi tên cột --%>
-                                            <th>Trạng thái</th> <%-- Đổi tên cột --%>
                                             <th style="width: 100px;">Hành động</th> <%-- Đổi tên cột và giới hạn chiều rộng --%>
                                         </tr>
                                     </thead>
@@ -81,10 +80,6 @@
                                                 <td>
                                                     <%-- Định dạng ngày tháng dd/MM/yyyy HH:mm --%>
                                                     <fmt:formatDate value="${list.createAt}" pattern="dd/MM/yyyy HH:mm" />
-                                                </td>
-                                                <td>
-                                                    ${list.getStatus()}
-
                                                 </td>
                                                 <td>
                                                     <%-- Form hủy đơn hàng --%>
@@ -110,7 +105,7 @@
                 <jsp:include page="../common/user/footer.jsp"/>
 
             </div>
-        </div>
+            </div>
         <jsp:include page="../common/user/logOutModal.jsp"/>
 
         <script src="${pageContext.request.contextPath}/vendor-admin/jquery/jquery.min.js"></script>

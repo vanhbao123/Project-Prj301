@@ -25,19 +25,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/responsive.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home-sidebar.css">
-        <style>
-                #snowCanvas {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                pointer-events: none; /* để click vào trang vẫn bình thường */
-                z-index: 9999; /* hiển thị trên tất cả */
-            }
 
-        
-        </style>
     </head>
 
     <c:if test="${not empty sessionScope.message}">
@@ -48,7 +36,6 @@
     </c:if>
 
     <body>
-         <canvas id="snowCanvas"></canvas>
         <div class="wrapper">
             <div class="preloader">
                 <div class="loading-center">
@@ -231,65 +218,7 @@
         <script src="${pageContext.request.contextPath}/js/plugins.js"></script>
         <script src="${pageContext.request.contextPath}/js/main.js"></script>
     </body>
-       <script>
-            const canvas = document.getElementById("snowCanvas");
-            const ctx = canvas.getContext("2d");
 
-            let w = canvas.width = window.innerWidth;
-            let h = canvas.height = window.innerHeight;
-
-            // Tạo mảng chứa các hạt tuyết
-            const snowflakes = [];
-            const snowCount = 100; // số lượng hạt tuyết
-
-            for (let i = 0; i < snowCount; i++) {
-                snowflakes.push({
-                    x: Math.random() * w,
-                    y: Math.random() * h,
-                    radius: Math.random() * 3 + 1,
-                    speed: Math.random() * 1 + 0.5,
-                    wind: Math.random() * 0.5 - 0.25
-                });
-            }
-
-            function drawSnow() {
-                ctx.clearRect(0, 0, w, h);
-                ctx.fillStyle = "white";
-                ctx.beginPath();
-                snowflakes.forEach(f => {
-                    ctx.moveTo(f.x, f.y);
-                    ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
-                });
-                ctx.fill();
-                moveSnow();
-            }
-
-            function moveSnow() {
-                snowflakes.forEach(f => {
-                    f.y += f.speed;
-                    f.x += f.wind;
-                    if (f.y > h)
-                        f.y = -f.radius; // khi xuống dưới quay lên đầu
-                    if (f.x > w)
-                        f.x = 0;
-                    if (f.x < 0)
-                        f.x = w;
-                });
-            }
-
-            function animate() {
-                drawSnow();
-                requestAnimationFrame(animate);
-            }
-
-            animate();
-
-            // Resize canvas khi thay đổi kích thước màn hình
-            window.addEventListener('resize', () => {
-                w = canvas.width = window.innerWidth;
-                h = canvas.height = window.innerHeight;
-            });
-        </script>
     <style>
         /* ---- CSS Cho Nút Đẹp Hơn ---- */
         .styled-button {
