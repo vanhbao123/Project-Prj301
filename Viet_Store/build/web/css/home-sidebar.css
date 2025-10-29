@@ -152,7 +152,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css
     gap: 10px;             /* tạo khoảng cách đều giữa số và nội dung */
 }
 .titles{
-    width: 250%;
+    width: 200px;
+    text-align: center;
 }
 .customer-rank {
     background-color: #ff6b00; /* màu cam giống phần sản phẩm */

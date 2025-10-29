@@ -2,7 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
         <group>
             <file>file:/C:/Users/dinhl/Desktop/Viet-Store/Project-Prj301/Viet_Store/src/java/dal/implement/ReviewDAO.java</file>
             <file>file:/C:/Users/dinhl/Desktop/Viet-Store/Project-Prj301/Viet_Store/web/view/common/admin/sidebar.jsp</file>
@@ -18,8 +17,5 @@
             <file>file:/C:/Users/dinhl/Desktop/Viet-Store/Project-Prj301/Viet_Store/src/java/dal/DBContext.java</file>
             <file>file:/C:/Users/dinhl/Desktop/Viet-Store/Project-Prj301/Viet_Store/src/java/controller/admin/AdminHomeServlet.java</file>
         </group>
-=======
-        <group/>
->>>>>>> 6d7c2c3f6ef3344420adaaeb72aa78f33d813e87
     </open-files>
 </project-private>

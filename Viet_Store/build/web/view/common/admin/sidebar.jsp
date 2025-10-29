@@ -4,7 +4,7 @@
     <li class="nav-item active">
         <a class="nav-link" href="${pageContext.request.contextPath}/admin/admin-home">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Quản Lý Sản phẩm</span>
+            <span>Quản Lý Sản Phẩm</span>
         </a>
     </li>
     <%-- THÊM MỤC MỚI ĐỂ QUẢN LÝ TÀI KHOẢN --%>
