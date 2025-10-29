@@ -14,18 +14,17 @@ import model.Product;
  * @author DELL
  */
 public class ProductDAO extends DBContext {
-
     // ✅ Lấy Top 3 sản phẩm bán chạy nhất
+
     public List<Product> getTop3BestSeller() {
         List<Product> list = new ArrayList<>();
         String sql = """
             SELECT TOP 3 
-                p.id, p.name, p.image, p.price, p.description, p.categoryId,
+                p.id, p.name, p.image, p.price, p.description, p.categoryId, 
                 SUM(od.quantity) AS totalSold
             FROM Product p
             JOIN OrderDetails od ON p.id = od.productId
             JOIN [Order] o ON od.orderId = o.id
-            WHERE o.status = N'Đã duyệt'
             GROUP BY p.id, p.name, p.image, p.price, p.description, p.categoryId
             ORDER BY SUM(od.quantity) DESC
         """;
@@ -40,7 +39,6 @@ public class ProductDAO extends DBContext {
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
                         resultSet.getString("image"),
-                        0, // quantity không cần trong top seller
                         resultSet.getFloat("price"),
                         resultSet.getString("description"),
                         resultSet.getInt("categoryId")
@@ -49,7 +47,7 @@ public class ProductDAO extends DBContext {
             }
 
         } catch (Exception e) {
-            System.err.println("❌ Lỗi trong getTop3BestSeller: " + e.getMessage());
+            System.err.println(" Lỗi trong getTop3BestSeller: " + e.getMessage());
         } finally {
             closeResources();
         }
